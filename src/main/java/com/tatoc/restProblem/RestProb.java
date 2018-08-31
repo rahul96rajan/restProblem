@@ -1,9 +1,13 @@
 package com.tatoc.restProblem;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -28,8 +32,12 @@ public class RestProb
 		System.out.println("Token --> " + token);
 		
 		String postUrl = "http://10.0.1.86/tatoc/advanced/rest/service/register";
-		String postString = "id=" + session_ID + "& signature=" + token + "&allow_access=1";;
-		CloseableHttpResponse response = RestClientGetImp.post(postUrl, postString);
+		List<NameValuePair> paramNameValuePair = new ArrayList<NameValuePair>();
+		paramNameValuePair.add(new BasicNameValuePair("id", session_ID));
+		paramNameValuePair.add(new BasicNameValuePair("signature", token));
+		paramNameValuePair.add(new BasicNameValuePair("allow_access", "1"));
+		CloseableHttpResponse response = RestClientGetImp.post(postUrl, paramNameValuePair);
 		System.out.println(" Status Code =  " + response.getStatusLine());
+		driver.quit();
     }
 }
